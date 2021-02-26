@@ -14,6 +14,34 @@ const RegisterComponent = ({ history }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!email || !password) {
+            toast.error('Email and password is required');
+            return;
+        }
+
+        if (password.length < 6) {
+            toast.error('Password must be at least 6 characters long');
+            return;
+        }
+
+        try {
+            const result = await auth.signInWithEmailLink(email, window.location.href);
+            
+            if (result.user.emailVerified) {
+                window.localStorage.removeItem('emailForSignIn');
+                
+                let user = auth.currentUser;
+                await user.updatePassword(password);
+                const idTokenResult = await user.getIdTokenResult();
+                
+                console.log(user, idTokenResult);
+
+                history.push('/');
+            }
+        } catch (error) {
+            console.log(error.message);
+            toast.error(error.message)
+        }
     }
 
     const completeRegistrationForm = () => (
