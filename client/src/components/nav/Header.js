@@ -10,7 +10,6 @@ const Header = () => {
     const [current, setCurrent] = useState('home');
 
     const handleClick = e => {
-        console.log('click ', e);
         setCurrent(e.key);
     }
 
@@ -25,7 +24,7 @@ const Header = () => {
           </Item>
 
           <Item key="login" icon={<LoginOutlined />} className="float-right">
-          <Link to="/login">Register</Link>
+          <Link to="/login">Login</Link>
           </Item>
 
           <SubMenu icon={<UserOutlined />} title="Username" className="float-right">
