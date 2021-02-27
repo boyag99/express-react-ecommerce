@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { auth } from '../../firebase';
+import { auth, googleAuthProvider } from '../../firebase';
 import { toast } from 'react-toastify';
 import { Button } from 'antd';
-import { MailOutlined } from '@ant-design/icons';
+import { GoogleOutlined, MailOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 
 const Login = ({ history }) => {
@@ -13,8 +13,7 @@ const Login = ({ history }) => {
 
     let dispatch = useDispatch();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleEmailLogin = async () => {
         setLoading(true);
 
         try {
@@ -29,8 +28,12 @@ const Login = ({ history }) => {
                 }
               });
 
-            toast.success('Login successfully');
-            history.push('/');
+            toast.success('Login with Email Successfully');
+            
+            setTimeout(() => {
+
+                history.push('/');
+            }, 1500);
 
 
         } catch (error) {
@@ -39,8 +42,35 @@ const Login = ({ history }) => {
         }
     }
 
+    const handleGoogleLogin = async () => {
+        auth.signInWithPopup(googleAuthProvider)
+            .then(async (result) => {
+                setLoading(true);
+                const { user } = result;
+                const idTokenResult = await user.getIdTokenResult();
+
+                dispatch({
+                    type: 'LOGGED_IN_USER',
+                    payload: {
+                    email: user.email,
+                    token: idTokenResult.token
+                    }
+                });
+
+                toast.success('Login with Google Successfully');
+                
+                setTimeout(() => {
+
+                    history.push('/');
+                }, 1500);
+            }).catch((error) => {
+                toast.error(error.message);
+                setLoading(false);
+            });
+    }
+
     const loginForm = () => (
-        <form onSubmit={handleSubmit}>
+        <form>
             <div className="form-group">
                 <input 
                     type="email" 
@@ -68,9 +98,21 @@ const Login = ({ history }) => {
                     shape="round" 
                     icon={<MailOutlined />} 
                     size="large" 
-                    onClick={handleSubmit}
-                    disabled={!email || password.length < 6}>
+                    loading={loading}
+                    disabled={!email || password.length < 6}
+                    onClick={handleEmailLogin}>
                     Login with Email/Password
+                </Button>
+                <Button 
+                        type="danger" 
+                        className="mb-3" 
+                        block 
+                        shape="round" 
+                        icon={<GoogleOutlined />} 
+                        size="large" 
+                        loading={loading}
+                        onClick={handleGoogleLogin}>
+                    Login with Google
                 </Button>
             </div>
         </form>
@@ -82,6 +124,7 @@ const Login = ({ history }) => {
                 <div className="col-md-6 offset-md-3">
                     <h4>Login</h4>
                     {loginForm()}
+   
                 </div>
             </div>
         </div>
