@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import { HomeOutlined, UserAddOutlined, UserOutlined, LoginOutlined, LogoutOutlined, AppstoreOutlined } from '@ant-design/icons';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify'
@@ -21,7 +21,7 @@ const Header = () => {
 
     const logout = async () => {
       await firebase.auth().signOut();
-      
+
       dispatch({ 
         type: 'LOGOUT',
         payload: null
