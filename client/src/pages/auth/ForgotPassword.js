@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Button } from 'antd';
 
 const ForgotPaswords = ({ history }) => {
@@ -9,6 +9,16 @@ const ForgotPaswords = ({ history }) => {
         const [email, setEmail] = useState('');
         const [loading, setLoading] = useState(false);
 
+        let { user } = useSelector((state) => ({...state}));
+
+        useEffect(() => {
+
+            if (user && user.token) {
+                history.push('/');
+            }
+
+        }, [history, user]);
+        
         const handleSubmit = async () => {
             setLoading(true);
 
