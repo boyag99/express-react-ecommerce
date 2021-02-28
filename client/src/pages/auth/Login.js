@@ -52,8 +52,8 @@ const Login = ({ history }) => {
                 dispatch({
                     type: 'LOGGED_IN_USER',
                     payload: {
-                    email: user.email,
-                    token: idTokenResult.token
+                        email: user.email,
+                        token: idTokenResult.token
                     }
                 });
 
