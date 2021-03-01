@@ -53,7 +53,7 @@ const Header = () => {
           )}
 
           {user && (
-            <SubMenu icon={<UserOutlined />} title={user.email && user.email.split('@')[0]} className="float-right">
+            <SubMenu icon={<UserOutlined />} title={user && user.name} className="float-right">
               <Item key="setting:1" icon={<AppstoreOutlined />}>Dashboard</Item>
               <Item icon={<LogoutOutlined />} onClick={logout}>Logout</Item>
             </SubMenu>
