@@ -1,5 +1,5 @@
 exports.createOrUpdateUser = (req, res) => {
-    res.send({
+    res.json({
         data: "hey u hit create-or-update-user API"
     })
 };
