@@ -24,6 +24,14 @@ const Login = ({ history }) => {
 
     }, [history, user]);
 
+    const roleBasedRedirect = (res) => {
+        if (res.data.role === 'admin') {
+            history.push('/admin/dashboard');
+        } else {
+            history.push('/user/history');
+        }
+    }
+
     const handleEmailLogin = async () => {
         setLoading(true);
 
@@ -44,15 +52,13 @@ const Login = ({ history }) => {
                                 cart: res.data.cart
                             }
                         });
-                    });
 
-            toast.success('Login with Email Successfully');
+                        toast.success('Login with Email Successfully');
             
-            setTimeout(() => {
-
-                history.push('/');
-            }, 1500);
-
+                        setTimeout(() => {
+                            roleBasedRedirect(res);
+                        }, 1500);
+                    });
 
         } catch (error) {
             toast.error(error.message);
@@ -80,14 +86,15 @@ const Login = ({ history }) => {
                                 cart: res.data.cart
                             }
                         });
+
+                        toast.success('Login with Google Successfully');
+                
+                        setTimeout(() => {
+                            roleBasedRedirect(res);
+                        }, 1500);
                     });
 
-                toast.success('Login with Google Successfully');
                 
-                setTimeout(() => {
-
-                    history.push('/');
-                }, 1500);
             }).catch((error) => {
                 toast.error(error.message);
                 setLoading(false);
