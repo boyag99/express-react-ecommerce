@@ -17,3 +17,16 @@ exports.createOrUpdateUser = async (req, res) => {
         res.status(200).json(newUser);
     }
 };
+
+exports.currentUser = async (req, res) => {
+    const { email } = req.decodedToken;
+    User.findOne({ email}).exec((err, user) => {
+        if (err) {
+            throw new Error(err);
+        } else {
+            res.status(200).json(user);
+        }
+    });
+
+    
+};

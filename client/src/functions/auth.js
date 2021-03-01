@@ -7,3 +7,11 @@ export const createOrUpdateUser = async (token) => {
         }
     });
 }
+
+export const currentUser = async (token) => {
+    return await axios.post(`${process.env.REACT_APP_API}/current-user`, {}, { 
+        headers: { 
+            token
+        }
+    });
+}
