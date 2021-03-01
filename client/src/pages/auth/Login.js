@@ -40,10 +40,8 @@ const Login = ({ history }) => {
             const idTokenResult = await user.getIdTokenResult();
 
             createOrUpdateUser(idTokenResult.token)
-                .then((res) => { console.log(res) })
-                .catch((error) => {
-                    console.log(error);
-                });
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err));
 
             // dispatch({
             //     type: 'LOGGED_IN_USER',
@@ -68,26 +66,30 @@ const Login = ({ history }) => {
     }
 
     const handleGoogleLogin = async () => {
-        auth.signInWithPopup(googleAuthProvider)
+        await auth.signInWithPopup(googleAuthProvider)
             .then(async (result) => {
                 setLoading(true);
                 const { user } = result;
                 const idTokenResult = await user.getIdTokenResult();
 
-                dispatch({
-                    type: 'LOGGED_IN_USER',
-                    payload: {
-                        email: user.email,
-                        token: idTokenResult.token
-                    }
-                });
+                createOrUpdateUser(idTokenResult.token)
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err));
 
-                toast.success('Login with Google Successfully');
+                // dispatch({
+                //     type: 'LOGGED_IN_USER',
+                //     payload: {
+                //         email: user.email,
+                //         token: idTokenResult.token
+                //     }
+                // });
+
+                // toast.success('Login with Google Successfully');
                 
-                setTimeout(() => {
+                // setTimeout(() => {
 
-                    history.push('/');
-                }, 1500);
+                //     history.push('/');
+                // }, 1500);
             }).catch((error) => {
                 toast.error(error.message);
                 setLoading(false);

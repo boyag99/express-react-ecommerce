@@ -10,6 +10,7 @@ const userSchema = new Schema({
         required: true,
         index: true
     },
+    picture: String,
     role: {
         type: String,
         default: 'subscriber'
@@ -25,6 +26,4 @@ const userSchema = new Schema({
     // }]
 }, { timestamp: true });
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+module.exports = mongoose.model('User', userSchema);
