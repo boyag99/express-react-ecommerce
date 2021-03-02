@@ -3,15 +3,22 @@ import { Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LoadingToRedirect from './LoadingToRedirect';
 
-const UserRoute = ({ children, ...rest }) => {
+const UserRoute = ({ component: Component, ...rest }) => {
 
     const { user } = useSelector((state) => ({...state}));
 
-    return user && user.token ? (
-        <Route { ...rest } render={() => children} />
-    ) : (
-        <LoadingToRedirect />
-    )
+    return (
+        <Route
+          {...rest}
+          render={props =>
+            user && user.token ? (
+              <Component {...props} />
+            ) : (
+                <LoadingToRedirect />
+            )
+          }
+        />
+      );
 }
 
 export default UserRoute;
