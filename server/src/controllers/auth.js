@@ -22,7 +22,7 @@ exports.currentUser = async (req, res) => {
     const { email } = req.decodedToken;
     User.findOne({ email}).exec((err, user) => {
         if (err) {
-            throw new Error(err);
+            res.status(404).json(err);
         } else {
             res.status(200).json(user);
         }
