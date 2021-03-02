@@ -21,7 +21,8 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // middlewares
 app.use(morgan('dev'));
-app.use(bodyParser.json({ limit: '2mb' }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // cors config
 var whitelist = ['http://localhost:3000']
