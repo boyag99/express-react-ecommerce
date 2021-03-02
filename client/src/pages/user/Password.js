@@ -4,7 +4,7 @@ import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
 import { Button } from 'antd';
 import { useSelector } from 'react-redux';
-
+import firebase from 'firebase/app';
 
 const Password = ({ history }) => {
 
@@ -31,21 +31,15 @@ const Password = ({ history }) => {
         }
 
         try {
-            const credential = await auth.signInWithEmailAndPassword(user.email, password);
-            console.log(credential);
-            if (credential) {
-                await auth.currentUser.updatePassword(newPassword);
-                
-                setLoading(false);
-                toast.success('Password updated successfully');
-                setPassword('');
-                setNewPassword('');
-                setConfirmPassword('');
-            } else {
-                setLoading(false);
-                toast.error('Old password is invalid');
-                return;
-            }
+            const credential = await firebase.auth.EmailAuthProvider.credential(user.email, password);
+            await auth.currentUser.reauthenticateWithCredential(credential);
+            await auth.currentUser.updatePassword(newPassword);
+            
+            setLoading(false);
+            toast.success('Password updated successfully');
+            setPassword('');
+            setNewPassword('');
+            setConfirmPassword('');
 
         } catch (error) {
             setLoading(false);
