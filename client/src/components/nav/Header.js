@@ -54,7 +54,19 @@ const Header = () => {
 
           {user && (
             <SubMenu icon={<UserOutlined />} title={user && user.name} className="float-right">
-              <Item key="setting:1" icon={<AppstoreOutlined />}>Dashboard</Item>
+              
+              {user && user.role === 'subscriber' && (
+                <Item key="user_history" icon={<AppstoreOutlined />}>
+                  <Link to="/user/history">Dashboard</Link>
+                </Item>
+              )}
+
+              {user && user.role === 'admin' && (
+                <Item key="admin_dashboard" icon={<AppstoreOutlined />}>
+                  <Link to="/admin/dashboard">Dashboard</Link>
+                </Item>
+              )}
+
               <Item icon={<LogoutOutlined />} onClick={logout}>Logout</Item>
             </SubMenu>
           )}
