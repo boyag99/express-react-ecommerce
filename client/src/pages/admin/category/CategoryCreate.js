@@ -1,7 +1,7 @@
 import React from 'react';
-import AdminNav from '../../components/nav/AdminNav';
+import AdminNav from '../../../components/nav/AdminNav';
 
-const AdminDashboard = () => {
+const CategoryCreate = () => {
  
     return (
         <div className="container-fluid p-5">
@@ -10,11 +10,11 @@ const AdminDashboard = () => {
                     <AdminNav />
                 </div>
                 <div className="col">
-                    <p>admin dashboard page</p>
+                    <p>admin category create page</p>
                 </div>
         </div>
     </div>
     );
 }
 
-export default AdminDashboard;
+export default CategoryCreate;
