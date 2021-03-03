@@ -20,11 +20,11 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // middlewares
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ 
-    
-    
-    
-    extended: true }));
+app.use(
+    bodyParser.urlencoded({
+        extended: true,
+    }),
+);
 app.use(bodyParser.json());
 
 // cors config
@@ -41,8 +41,7 @@ var corsOptionsDelegate = function (req, callback) {
 app.use(cors());
 
 // routes middlewares
-readdirSync('./src/routes').map((r) =>
-    app.use('/api', require('./src/routes/' + r)),
+readdirSync('./src/routes').map((r) =>app.use('/api', require('./src/routes/' + r)),
 );
 
 app.listen(port, () => {
