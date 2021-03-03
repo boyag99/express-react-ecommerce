@@ -23,7 +23,7 @@
     }
   },
   "lint-staged": {
-    "server/src/**/*.{js,json}": "prettier --single-quote --trailing-comma all --tab-width 4 --write server.js"
+    "server/**/*.{js,json}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
   },
   "devDependencies": {
     "husky": "^5.1.3",

@@ -63,14 +63,14 @@ exports.remove = async (req, res) => {
     const { slug } = req.params;
 
     try {
-        const category = await Category.findOneAndDelete({              slug });
+        const category = await Category.findOneAndDelete({ slug });
 
-                                if (category) {
-                                    res.status(200).json(category);
-                                } else {
-                                    res.status(404).json({
-                                        message: `The category could not be found in database.`,
-                                    });
+        if (category) {
+            res.status(200).json(category);
+        } else {
+            res.status(404).json({
+                message: `The category could not be found in database.`,
+            });
         }
     } catch (error) {
         res.status(400).json(error);
