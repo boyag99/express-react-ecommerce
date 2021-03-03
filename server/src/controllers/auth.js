@@ -11,13 +11,13 @@ exports.createOrUpdateUser = async (req, res) => {
 
     if (user) {
         res.status(200).json(user);
-    } else {
-        const newUser = await User({
-            name: email.split('@')[0],
-            email,
-            picture,
-        }).save();
-        res.status(200).json(newUser);
+                    } else {
+                        const newUser = await User({
+                            name: email.split('@')[0],
+                            email,
+                            picture,
+                        }).save();
+                        res.status(200).json(newUser);
     }
 };
 
