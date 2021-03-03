@@ -2,21 +2,24 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const { ObjectId } = Schema;
 
-const categorySchema = new Schema({
-    name: {
-        type: String,
-        trim: true,
-        required: true,
-        minLength: 3,
-        maxLength: 32
+const categorySchema = new Schema(
+    {
+        name: {
+            type: String,
+            trim: true,
+            required: true,
+            minLength: 3,
+            maxLength: 32,
+        },
+        slug: {
+            type: String,
+            unique: true,
+            lowercase: true,
+            index: true,
+        },
     },
-    slug: {
-        type: String,
-        unique: true,
-        lowercase: true,
-        index: true
-    }
-}, { timestamps: true });
+    { timestamps: true },
+);
 
 const Category = mongoose.model('Category', categorySchema);
 

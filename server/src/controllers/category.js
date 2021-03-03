@@ -6,16 +6,16 @@ exports.create = async (req, res) => {
     const slug = slugify(name);
 
     try {
-        const newCategory = await Category({ 
-            name, 
-            slug 
+        const newCategory = await Category({
+            name,
+            slug,
         }).save();
 
         res.status(201).json(newCategory);
     } catch (error) {
         res.status(400).send(error);
     }
-}
+};
 
 exports.read = async (req, res) => {
     const { slug } = req.params;
@@ -27,13 +27,13 @@ exports.read = async (req, res) => {
             res.status(200).json(category);
         } else {
             res.status(404).json({
-                message: `The category could not be found in database.`
+                message: `The category could not be found in database.`,
             });
         }
     } catch (error) {
         res.status(400).send(error);
     }
-}
+};
 
 exports.update = async (req, res) => {
     const { slug } = req.params;
@@ -41,24 +41,27 @@ exports.update = async (req, res) => {
     const newSlug = slugify(name);
 
     try {
-        const category = await Category.findOneAndUpdate({ slug }, { name, slug: newSlug }, { new: true });
+        const category = await Category.findOneAndUpdate(
+            { slug },
+            { name, slug: newSlug },
+            { new: true },
+        );
 
         if (category) {
             res.status(200).json(category);
         } else {
             res.status(404).json({
-                message: `The category could not be found in database.`
+                message: `The category could not be found in database.`,
             });
         }
     } catch (error) {
         res.status(400).json(error);
     }
-
-}
+};
 
 exports.remove = async (req, res) => {
     const { slug } = req.params;
-    
+
     try {
         const category = await Category.findOneAndDelete({ slug });
 
@@ -66,13 +69,13 @@ exports.remove = async (req, res) => {
             res.status(200).json(category);
         } else {
             res.status(404).json({
-                message: `The category could not be found in database.`
+                message: `The category could not be found in database.`,
             });
         }
     } catch (error) {
         res.status(400).json(error);
     }
-}
+};
 
 exports.list = async (req, res) => {
     try {
@@ -82,10 +85,10 @@ exports.list = async (req, res) => {
             res.status(200).json(categories);
         } else {
             res.status(404).json({
-                message: `The categories could not be found in database.`
+                message: `The categories could not be found in database.`,
             });
         }
     } catch (error) {
         res.status(400).json(error);
     }
-}
+};

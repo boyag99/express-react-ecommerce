@@ -2,7 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const { authCheck, adminCheck } = require('../middlewares/auth');
-const { create, read, update, remove, list } = require('../controllers/category');
+const {
+    create,
+    read,
+    update,
+    remove,
+    list,
+} = require('../controllers/category');
 
 router.post('/category/create', authCheck, adminCheck, create);
 router.get('/category/read/:slug', authCheck, adminCheck, read);
