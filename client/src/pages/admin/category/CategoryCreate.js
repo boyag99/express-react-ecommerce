@@ -7,7 +7,9 @@ import {
     getCategories,
     removeCategory,
 } from '../../../functions/category';
-import { Button } from 'antd';
+import { Button, Table, Space } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const CategoryCreate = () => {
     const [name, setName] = useState('');
@@ -29,7 +31,7 @@ const CategoryCreate = () => {
 
         createCategory(user.token, name)
             .then((res) => {
-                console.log(res);
+                loadCategories();
                 setLoading(false);
                 setName('');
                 toast.success(
@@ -65,13 +67,64 @@ const CategoryCreate = () => {
                         type="primary"
                         loading={loading}
                         onClick={handleSubmit}
-                        disabled={!name || name.length < 6}>
+                        disabled={!name || name.length < 3}>
                         Submit
                     </Button>
                 </div>
             </form>
         );
     };
+
+    const handleRemove = async (slug) => {
+        setLoading(true);
+        let confirm = window.confirm(
+            'Are you sure you want to remove this category?'
+        );
+
+        if (confirm) {
+            const res = await removeCategory(user.token, slug);
+
+            if (res) {
+                loadCategories();
+                toast.success(
+                    `Delete category with name ${res.data.name} successfully`
+                );
+            } else {
+                toast.error(
+                    `Delete category with name ${res.data.name} failed`
+                );
+            }
+        }
+
+        setLoading(false);
+    };
+
+    const columns = [
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Slug',
+            dataIndex: 'slug',
+            key: 'slug',
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (text, record) => (
+                <Space size="middle">
+                    <Link>
+                        <EditOutlined />
+                    </Link>
+                    <Link onClick={() => handleRemove(record.slug)}>
+                        <DeleteOutlined />
+                    </Link>
+                </Space>
+            ),
+        },
+    ];
 
     return (
         <div className="container-fluid p-5">
@@ -84,6 +137,14 @@ const CategoryCreate = () => {
                         <div className="col-md-6 offset-md-3">
                             <h4>Category Create</h4>
                             {createCategoryForm()}
+
+                            <hr />
+                            <Table
+                                loading={loading}
+                                rowKey={(record) => record._id}
+                                columns={columns}
+                                dataSource={categories}
+                            />
                         </div>
                     </div>
                 </div>
