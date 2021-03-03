@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -17,11 +18,6 @@
     "url": "https://github.com/boyag99/react-redux-ecommerce/issues"
   },
   "homepage": "https://github.com/boyag99/react-redux-ecommerce#readme",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "server/**/*.{js,json}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
   },
