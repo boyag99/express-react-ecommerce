@@ -19,7 +19,7 @@ export const createCategory = async (token, name) => {
 };
 
 export const getCategory = async (token, slug) => {
-    return await axios.get(`${process.env.REACT_APP_APP}/${READ}/${slug}`, {
+    return await axios.get(`${process.env.REACT_APP_API}/${READ}/${slug}`, {
         headers: {
             token,
         },

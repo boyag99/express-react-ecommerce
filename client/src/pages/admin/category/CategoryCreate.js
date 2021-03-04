@@ -7,15 +7,23 @@ import {
     getCategories,
     removeCategory,
 } from '../../../functions/category';
-import { Button, Table, Space } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Button, Table, Space, Input } from 'antd';
+import {
+    EditOutlined,
+    DeleteOutlined,
+    SearchOutlined,
+} from '@ant-design/icons';
+import Highlighter from 'react-highlight-words';
 import { Link } from 'react-router-dom';
+import CategoryForm from '../../../components/forms/CategoryForm';
 
 const CategoryCreate = () => {
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => ({ ...state }));
     const [categories, setCategories] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const [searchedColumn, setSearchedColumn] = useState('');
 
     useEffect(() => {
         loadCategories();
@@ -46,35 +54,6 @@ const CategoryCreate = () => {
             });
     };
 
-    const createCategoryForm = () => {
-        return (
-            <form>
-                <div className="form-group">
-                    <label htmlFor="name">Name:</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Enter name category"
-                        autoFocus
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <Button
-                        type="primary"
-                        loading={loading}
-                        onClick={handleSubmit}
-                        disabled={!name || name.length < 3}>
-                        Submit
-                    </Button>
-                </div>
-            </form>
-        );
-    };
-
     const handleRemove = async (slug) => {
         setLoading(true);
         let confirm = window.confirm(
@@ -99,26 +78,114 @@ const CategoryCreate = () => {
         setLoading(false);
     };
 
+    const getColumnSearchProps = (dataIndex) => {
+        return {
+            filterDropdown: ({
+                setSelectedKeys,
+                selectedKeys,
+                confirm,
+                clearFilters,
+            }) => (
+                <div style={{ padding: 8 }}>
+                    <Input
+                        placeholder={`Search ${dataIndex}`}
+                        value={selectedKeys[0]}
+                        onChange={(e) => {
+                            setSelectedKeys(
+                                e.target.value ? [e.target.value] : []
+                            );
+                        }}
+                        onPressEnter={() =>
+                            handleSearch(selectedKeys, confirm, dataIndex)
+                        }
+                        style={{
+                            width: 188,
+                            marginBottom: 8,
+                            display: 'block',
+                        }}
+                    />
+                    <Space>
+                        <Button
+                            type='primary'
+                            onClick={() =>
+                                handleSearch(selectedKeys, confirm, dataIndex)
+                            }
+                            icon={<SearchOutlined />}
+                            size='small'
+                            style={{ width: 90 }}>
+                            Search
+                        </Button>
+                        <Button
+                            onClick={() => handleReset(clearFilters)}
+                            size='small'
+                            style={{ width: 90 }}>
+                            Reset
+                        </Button>
+                    </Space>
+                </div>
+            ),
+            filterIcon: (filtered) => (
+                <SearchOutlined
+                    style={{ color: filtered ? '#1890ff' : undefined }}
+                />
+            ),
+            onFilter: (value, record) =>
+                record[dataIndex]
+                    ? record[dataIndex]
+                          .toString()
+                          .toLowerCase()
+                          .includes(value.toLowerCase())
+                    : '',
+            render: (text) =>
+                searchedColumn === dataIndex ? (
+                    <Highlighter
+                        highlightStyle={{
+                            backgroundColor: '#ffc069',
+                            padding: 0,
+                        }}
+                        searchWords={[searchText]}
+                        autoEscape
+                        textToHighlight={text ? text.toString() : ''}
+                    />
+                ) : (
+                    text
+                ),
+        };
+    };
+
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+    };
+
+    const handleReset = (clearFilters) => {
+        clearFilters();
+        setSearchText('');
+    };
+
     const columns = [
         {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
+            ...getColumnSearchProps('name'),
         },
         {
             title: 'Slug',
             dataIndex: 'slug',
             key: 'slug',
+            ...getColumnSearchProps('slug'),
         },
         {
             title: 'Action',
             key: 'action',
             render: (text, record) => (
-                <Space size="middle">
-                    <Link>
+                <Space size='middle'>
+                    <Link to={'/admin/category/edit/' + record.slug}>
                         <EditOutlined />
                     </Link>
-                    <Link onClick={() => handleRemove(record.slug)}>
+                    <Link to='/#' onClick={() => handleRemove(record.slug)}>
                         <DeleteOutlined />
                     </Link>
                 </Space>
@@ -127,16 +194,21 @@ const CategoryCreate = () => {
     ];
 
     return (
-        <div className="container-fluid p-5">
-            <div className="row">
-                <div className="col-md-2">
+        <div className='container-fluid p-5'>
+            <div className='row'>
+                <div className='col-md-2'>
                     <AdminNav />
                 </div>
-                <div className="col-md-10">
-                    <div className="row">
-                        <div className="col-md-6 offset-md-3">
+                <div className='col-md-10'>
+                    <div className='row'>
+                        <div className='col-md-6 offset-md-3'>
                             <h4>Category Create</h4>
-                            {createCategoryForm()}
+                            <CategoryForm
+                                handleSubmit={handleSubmit}
+                                name={name}
+                                setName={setName}
+                                loading={loading}
+                            />
 
                             <hr />
                             <Table
