@@ -1,23 +1,29 @@
 const SubCategory = require('../models/subCategory');
+const Category = require('../models/category');
 const slugify = require('slugify');
 
 exports.create = async (req, res) => {
-    const { name } = req.body;
+    const { name, category } = req.body;
     const slug = slugify(name);
 
-    const category = await SubCategory.findOne({ slug }).exec();
+    const currentCategory = await Category.findById(category).exec();
 
-    if (category) {
-        res.status(400).json({
-            err: `Category with name ${name} already exists`,
-        });
+    if (!currentCategory) {
+        res.status(400);
+    }
+
+    const subCategory = await SubCategory.findOne({ slug }).exec();
+
+    if (subCategory) {
+        res.status(400);
     } else {
-        const newCategory = await Category({
+        const newSubCategory = await SubCategory({
             name,
             slug,
+            parent: category,
         }).save();
 
-        res.status(201).json(newCategory);
+        res.status(201).json(newSubCategory);
     }
 };
 
