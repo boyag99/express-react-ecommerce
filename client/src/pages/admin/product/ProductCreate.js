@@ -38,10 +38,8 @@ const ProductCreate = () => {
                 window.location.reload();
             })
             .catch((err) => {
-                if (err.response.status === 400) {
-                    toast.error(err.response.data);
-                }
                 setLoading(false);
+                toast.error(err.response.data.error);
             });
     };
 
