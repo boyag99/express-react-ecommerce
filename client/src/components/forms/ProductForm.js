@@ -3,7 +3,7 @@ import { Button, Input, InputNumber, Select } from 'antd';
 const { TextArea } = Input;
 const { Option } = Select;
 
-const ProductForm = ({ handleSubmit, values, loading }) => {
+const ProductForm = ({ handleSubmit, handleChange, values, loading }) => {
     const {
         title,
         description,
@@ -20,10 +20,6 @@ const ProductForm = ({ handleSubmit, values, loading }) => {
         brand,
     } = values;
 
-    const handleChange = () => {
-        //
-    };
-
     return (
         <form>
             <div className='form-group'>
@@ -31,6 +27,7 @@ const ProductForm = ({ handleSubmit, values, loading }) => {
                 <Input
                     className='form-control'
                     id='title'
+                    name='title'
                     value={title}
                     onChange={handleChange}
                     placeholder='Enter name'
@@ -43,6 +40,7 @@ const ProductForm = ({ handleSubmit, values, loading }) => {
                 <TextArea
                     className='form-control'
                     id='description'
+                    name='description'
                     value={description}
                     onChange={handleChange}
                     placeholder='Enter description'
@@ -51,17 +49,19 @@ const ProductForm = ({ handleSubmit, values, loading }) => {
             </div>
             <div className='form-group'>
                 <label htmlFor='price'>Price:</label>
-                <InputNumber
+                <Input
+                    type='number'
                     defaultValue={0}
                     className='form-control'
                     id='price'
+                    name='price'
                     value={price}
                     onChange={handleChange}
                 />
             </div>
             <div className='form-group'>
                 <label htmlFor='shipping'>Shipping:</label>
-                <Select
+                <select
                     id='shipping'
                     showSearch
                     style={{ width: 200 }}
@@ -72,67 +72,75 @@ const ProductForm = ({ handleSubmit, values, loading }) => {
                         option.children
                             .toLowerCase()
                             .indexOf(input.toLowerCase()) >= 0
-                    }
-                    placeholder='Select a shipping'>
-                    <Option value='No'>No</Option>
-                    <Option value='Yes'>Yes</Option>
-                </Select>
+                    }>
+                    <option>Select a shipping</option>
+                    <option key='No' value='No'>
+                        No
+                    </option>
+                    <option key='Yes' value='Yes'>
+                        Yes
+                    </option>
+                </select>
             </div>
             <div className='form-group'>
                 <label htmlFor='quantity'>Quantity:</label>
-                <InputNumber
+                <Input
+                    type='number'
                     defaultValue={0}
                     className='form-control'
                     id='quantity'
+                    name='quantity'
                     value={quantity}
                     onChange={handleChange}
                 />
             </div>
             <div className='form-group'>
                 <label htmlFor='color'>Color:</label>
-                <Select
+                <select
                     id='color'
+                    name='color'
                     showSearch
                     style={{ width: 200 }}
-                    placeholder='Select a color'
                     optionFilterProp='children'
+                    value={color}
                     onChange={handleChange}
                     filterOption={(input, option) =>
                         option.children
                             .toLowerCase()
                             .indexOf(input.toLowerCase()) >= 0
-                    }
-                    value={color}>
+                    }>
+                    <option>Select a color</option>
                     {colors &&
                         colors.map((color, index) => (
-                            <Option key={color + '_' + index} value={color}>
+                            <option key={color + '_' + index} value={color}>
                                 {color}
-                            </Option>
+                            </option>
                         ))}
-                </Select>
+                </select>
             </div>
             <div className='form-group'>
                 <label htmlFor='brand'>Brand:</label>
-                <Select
+                <select
                     id='brand'
+                    name='brand'
                     showSearch
                     style={{ width: 200 }}
-                    placeholder='Select a brand'
+                    value={brand}
                     optionFilterProp='children'
                     onChange={handleChange}
                     filterOption={(input, option) =>
                         option.children
                             .toLowerCase()
                             .indexOf(input.toLowerCase()) >= 0
-                    }
-                    value={brand}>
+                    }>
+                    <option>Select a brand</option>
                     {brands &&
                         brands.map((brand, index) => (
-                            <Option key={brand + '_' + index} value={brand}>
+                            <option key={brand + '_' + index} value={brand}>
                                 {brand}
-                            </Option>
+                            </option>
                         ))}
-                </Select>
+                </select>
             </div>
             <div className='form-group'>
                 <Button

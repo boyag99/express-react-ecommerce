@@ -13,7 +13,7 @@ const initialState = {
     category: '',
     categories: [],
     subCategories: [],
-    shipping: 'Select a shipping',
+    shipping: '',
     quantity: 0,
     images: [],
     colors: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
@@ -31,7 +31,7 @@ const ProductCreate = () => {
     };
 
     const handleChange = (e) => {
-        //
+        setValues({ ...values, [e.target.name]: e.target.value });
     };
 
     return (
