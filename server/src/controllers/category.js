@@ -83,7 +83,9 @@ exports.remove = async (req, res) => {
 
 exports.list = async (req, res) => {
     try {
-        const categories = await Category.find({}).sort({ createAt: -1 });
+        const categories = await Category.find({})
+            .populate('subCategories')
+            .sort({ createAt: -1 });
 
         if (categories) {
             res.status(200).json(categories);

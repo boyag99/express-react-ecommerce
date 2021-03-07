@@ -3,13 +3,27 @@ import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import SubCategoryForm from '../../../components/forms/SubCategoryForm';
-import { createSubCategory } from '../../../functions/sub_categories';
+import {
+    createSubCategory,
+    getSubCategories,
+    removeSubCategory,
+} from '../../../functions/sub_categories';
+import SubCategoryList from './SubCategoryList';
 
 const SubCategoryCreate = () => {
     const [name, setName] = useState('');
     const [category, setCategory] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [subCategories, setSubCategories] = useState([]);
     const { user } = useSelector((state) => ({ ...state }));
+
+    useEffect(() => {
+        loadSubCategories();
+    }, []);
+
+    const loadSubCategories = () => {
+        getSubCategories().then((res) => setSubCategories(res.data));
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -19,6 +33,7 @@ const SubCategoryCreate = () => {
             .then((res) => {
                 setLoading(false);
                 setName('');
+                loadSubCategories();
                 toast.success(
                     `Create sub category with name ${name} of category ${category.children} successfully`
                 );
@@ -29,6 +44,30 @@ const SubCategoryCreate = () => {
                     `An error occurred while creating sub category with name ${name}`
                 );
             });
+    };
+
+    const handleRemove = async (slug) => {
+        setLoading(true);
+        let confirm = window.confirm(
+            'Are you sure you want to remove this category?'
+        );
+
+        if (confirm) {
+            const res = await removeSubCategory(user.token, slug);
+
+            if (res) {
+                loadSubCategories();
+                toast.success(
+                    `Delete sub category with name ${res.data.name} successfully`
+                );
+            } else {
+                toast.error(
+                    `Delete sub category with name ${res.data.name} failed`
+                );
+            }
+        }
+
+        setLoading(false);
     };
 
     return (
@@ -50,6 +89,13 @@ const SubCategoryCreate = () => {
                                     loading={loading}
                                 />
                             }
+                            <hr />
+                            <SubCategoryList
+                                loading={loading}
+                                subCategories={subCategories}
+                                handleRemove={handleRemove}
+                                token={user.token}
+                            />
                         </div>
                     </div>
                 </div>

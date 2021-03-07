@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const { ObjectId } = Schema;
 
 const categorySchema = new Schema(
     {
@@ -16,6 +17,12 @@ const categorySchema = new Schema(
             lowercase: true,
             index: true,
         },
+        subCategories: [
+            {
+                type: ObjectId,
+                ref: 'SubCategory',
+            },
+        ],
     },
     { timestamps: true },
 );

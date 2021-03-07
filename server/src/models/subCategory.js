@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const { ObjectId } = Schema;
-const Category = require('./category');
 
 const subCategorySchema = new Schema(
     {
@@ -20,7 +19,7 @@ const subCategorySchema = new Schema(
         },
         parent: {
             type: ObjectId,
-            ref: Category,
+            ref: 'Category',
             required: true,
         },
     },

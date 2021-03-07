@@ -49,7 +49,5 @@ export const removeSubCategory = async (token, slug) => {
 };
 
 export const getSubCategories = async () => {
-    return await axios.get(
-        `${process.env.REACT_APP_API}/${SUB_CATEGORY_PARAM}`
-    );
+    return await axios.get(`${process.env.REACT_APP_API}/sub-categories`);
 };
