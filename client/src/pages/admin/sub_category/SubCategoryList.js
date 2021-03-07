@@ -123,7 +123,7 @@ const SubCategoryList = ({ loading, subCategories, handleRemove, token }) => {
             key: 'action',
             render: (text, record) => (
                 <Space size='middle'>
-                    <Link to={'/admin/category/edit/' + record.slug}>
+                    <Link to={'/admin/sub-category/edit/' + record.slug}>
                         <EditOutlined />
                     </Link>
                     <Link to='#' onClick={() => handleRemove(record.slug)}>

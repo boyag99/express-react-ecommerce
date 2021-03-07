@@ -10,6 +10,7 @@ const SubCategoryForm = ({
     setName,
     setCategory,
     loading,
+    parent,
 }) => {
     const [categories, setCategories] = useState([]);
 
@@ -38,7 +39,8 @@ const SubCategoryForm = ({
                         option.children
                             .toLowerCase()
                             .indexOf(input.toLowerCase()) >= 0
-                    }>
+                    }
+                    defaultValue={parent && parent._id}>
                     {categories.length > 0 &&
                         categories.map((category) => (
                             <Option key={category._id} value={category._id}>

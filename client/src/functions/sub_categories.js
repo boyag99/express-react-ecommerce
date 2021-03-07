@@ -25,10 +25,10 @@ export const getSubCategory = async (token, slug) => {
     );
 };
 
-export const updateSubCategory = async (token, name, slug) => {
+export const updateSubCategory = async (token, slug, subCategory) => {
     return await axios.put(
         `${process.env.REACT_APP_API}/${SUB_CATEGORY_PARAM}/${slug}`,
-        { name },
+        subCategory,
         {
             headers: {
                 token,

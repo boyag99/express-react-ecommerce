@@ -31,7 +31,9 @@ exports.read = async (req, res) => {
     const { slug } = req.params;
 
     try {
-        const category = await SubCategory.findOne({ slug }).exec();
+        const category = await SubCategory.findOne({ slug })
+            .populate('parent')
+            .exec();
 
         if (category) {
             res.status(200).json(category);
@@ -47,18 +49,18 @@ exports.read = async (req, res) => {
 
 exports.update = async (req, res) => {
     const { slug } = req.params;
-    const { name } = req.body;
+    const { name, category } = req.body;
     const newSlug = slugify(name);
 
     try {
-        const category = await SubCategory.findOneAndUpdate(
+        const subCategory = await SubCategory.findOneAndUpdate(
             { slug },
-            { name, slug: newSlug },
+            { name, slug: newSlug, parent: category },
             { new: true },
         );
 
-        if (category) {
-            res.status(200).json(category);
+        if (subCategory) {
+            res.status(200).json(subCategory);
         } else {
             res.status(404).json({
                 message: `The category could not be found in database.`,
