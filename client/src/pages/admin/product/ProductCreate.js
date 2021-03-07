@@ -29,14 +29,19 @@ const ProductCreate = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setLoading(true);
         createProduct(user.token, values)
             .then((res) => {
-                console.log(res);
+                window.alert(
+                    `Created product with name ${values.title} successfully`
+                );
+                window.location.reload();
             })
             .catch((err) => {
                 if (err.response.status === 400) {
                     toast.error(err.response.data);
                 }
+                setLoading(false);
             });
     };
 
