@@ -25,9 +25,19 @@ const initialState = {
 const ProductCreate = () => {
     const [values, setValues] = useState(initialState);
     const [loading, setLoading] = useState(false);
+    const { user } = useSelector((state) => ({ ...state }));
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        createProduct(user.token, values)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                if (err.response.status === 400) {
+                    toast.error(err.response.data);
+                }
+            });
     };
 
     const handleChange = (e) => {

@@ -63,16 +63,10 @@ const ProductForm = ({ handleSubmit, handleChange, values, loading }) => {
                 <label htmlFor='shipping'>Shipping:</label>
                 <select
                     id='shipping'
-                    showSearch
+                    name='shipping'
                     style={{ width: 200 }}
-                    optionFilterProp='children'
                     value={shipping}
-                    onChange={handleChange}
-                    filterOption={(input, option) =>
-                        option.children
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                    }>
+                    onChange={handleChange}>
                     <option>Select a shipping</option>
                     <option key='No' value='No'>
                         No
@@ -99,16 +93,9 @@ const ProductForm = ({ handleSubmit, handleChange, values, loading }) => {
                 <select
                     id='color'
                     name='color'
-                    showSearch
                     style={{ width: 200 }}
-                    optionFilterProp='children'
                     value={color}
-                    onChange={handleChange}
-                    filterOption={(input, option) =>
-                        option.children
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                    }>
+                    onChange={handleChange}>
                     <option>Select a color</option>
                     {colors &&
                         colors.map((color, index) => (
@@ -123,16 +110,9 @@ const ProductForm = ({ handleSubmit, handleChange, values, loading }) => {
                 <select
                     id='brand'
                     name='brand'
-                    showSearch
                     style={{ width: 200 }}
                     value={brand}
-                    optionFilterProp='children'
-                    onChange={handleChange}
-                    filterOption={(input, option) =>
-                        option.children
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                    }>
+                    onChange={handleChange}>
                     <option>Select a brand</option>
                     {brands &&
                         brands.map((brand, index) => (
