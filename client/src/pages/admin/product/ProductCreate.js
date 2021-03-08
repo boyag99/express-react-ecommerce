@@ -61,6 +61,7 @@ const ProductCreate = () => {
 
     const handleCategoryChange = (e) => {
         setSubCategoriesOption([]);
+        values.subCategories = [];
         setValues({ ...values, [e.target.name]: e.target.value });
         if (e.target.value === 'default') {
             return;
