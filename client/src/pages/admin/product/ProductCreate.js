@@ -3,6 +3,7 @@ import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createProduct } from '../../../functions/product';
+import { getCategories } from '../../../functions/category';
 import ProductForm from '../../../components/forms/ProductForm';
 //import CategoryList from '../../../pages/admin/category/CategoryList';
 
@@ -26,6 +27,16 @@ const ProductCreate = () => {
     const [values, setValues] = useState(initialState);
     const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => ({ ...state }));
+
+    useEffect(() => {
+        loadCategories();
+    }, []);
+
+    const loadCategories = () => {
+        getCategories().then((res) =>
+            setValues({ ...values, categories: res.data })
+        );
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();

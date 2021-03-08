@@ -83,18 +83,12 @@ exports.remove = async (req, res) => {
 
 exports.list = async (req, res) => {
     try {
-        const categories = await Category.find({})
-            .populate('subCategories')
-            .sort({ createAt: -1 });
+        const categories = await Category.find({}).sort({ createAt: -1 });
 
-        if (categories) {
-            res.status(200).json(categories);
-        } else {
-            res.status(404).json({
-                message: `The categories could not be found in database.`,
-            });
-        }
+        res.json(categories);
     } catch (error) {
-        res.status(400).json(error);
+        res.status(400).json({
+            message: error.message,
+        });
     }
 };

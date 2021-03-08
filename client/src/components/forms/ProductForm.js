@@ -97,7 +97,7 @@ const ProductForm = ({ handleSubmit, handleChange, values, loading }) => {
                     value={color}
                     onChange={handleChange}>
                     <option>Select a color</option>
-                    {colors &&
+                    {colors.length > 0 &&
                         colors.map((color, index) => (
                             <option key={color + '_' + index} value={color}>
                                 {color}
@@ -118,6 +118,25 @@ const ProductForm = ({ handleSubmit, handleChange, values, loading }) => {
                         brands.map((brand, index) => (
                             <option key={brand + '_' + index} value={brand}>
                                 {brand}
+                            </option>
+                        ))}
+                </select>
+            </div>
+            <div className='form-group'>
+                <label htmlFor='category'>Category:</label>
+                <select
+                    id='category'
+                    name='category'
+                    style={{ width: 200 }}
+                    value={category}
+                    onChange={handleChange}>
+                    <option>Select a brand</option>
+                    {categories.length > 0 &&
+                        categories.map((category, index) => (
+                            <option
+                                key={category._id + '_' + index}
+                                value={category._id}>
+                                {category.name}
                             </option>
                         ))}
                 </select>
