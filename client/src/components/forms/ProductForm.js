@@ -3,14 +3,21 @@ import { Button, Input, InputNumber, Select } from 'antd';
 const { TextArea } = Input;
 const { Option } = Select;
 
-const ProductForm = ({ handleSubmit, handleChange, values, loading }) => {
+const ProductForm = ({
+    handleSubmit,
+    handleChange,
+    handleCategoryChange,
+    values,
+    loading,
+    subCategories,
+    subCategory,
+}) => {
     const {
         title,
         description,
         price,
         category,
         categories,
-        subCategories,
         shipping,
         quantity,
         images,
@@ -129,8 +136,8 @@ const ProductForm = ({ handleSubmit, handleChange, values, loading }) => {
                     name='category'
                     style={{ width: 200 }}
                     value={category}
-                    onChange={handleChange}>
-                    <option>Select a brand</option>
+                    onChange={handleCategoryChange}>
+                    <option value='default'>Select a brand</option>
                     {categories.length > 0 &&
                         categories.map((category, index) => (
                             <option
@@ -141,6 +148,27 @@ const ProductForm = ({ handleSubmit, handleChange, values, loading }) => {
                         ))}
                 </select>
             </div>
+            {subCategories.length > 0 && (
+                <div className='form-group'>
+                    <label htmlFor='subCategory'>Sub Category:</label>
+                    <select
+                        id='subCategory'
+                        name='subCategory'
+                        style={{ width: 200 }}
+                        value={subCategory}
+                        onChange={handleChange}>
+                        <option>Select a sub category</option>
+                        {subCategories.map((subCategory, index) => (
+                            <option
+                                key={subCategory._id + '_' + index}
+                                value={subCategory._id}>
+                                {subCategory.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            )}
+
             <div className='form-group'>
                 <Button
                     type='primary'

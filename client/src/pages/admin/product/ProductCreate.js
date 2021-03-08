@@ -3,7 +3,7 @@ import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createProduct } from '../../../functions/product';
-import { getCategories } from '../../../functions/category';
+import { getCategories, getSubCategories } from '../../../functions/category';
 import ProductForm from '../../../components/forms/ProductForm';
 //import CategoryList from '../../../pages/admin/category/CategoryList';
 
@@ -13,7 +13,6 @@ const initialState = {
     price: 0,
     category: '',
     categories: [],
-    subCategories: [],
     shipping: '',
     quantity: 0,
     images: [],
@@ -25,6 +24,8 @@ const initialState = {
 
 const ProductCreate = () => {
     const [values, setValues] = useState(initialState);
+    const [subCategories, setSubCategories] = useState([]);
+    const [subCategory, setCategory] = useState('');
     const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => ({ ...state }));
 
@@ -55,7 +56,23 @@ const ProductCreate = () => {
     };
 
     const handleChange = (e) => {
+        if (e.target.name === 'subCategory') {
+            setCategory(e.target.value);
+        } else {
+            setValues({ ...values, [e.target.name]: e.target.value });
+        }
+    };
+
+    const handleCategoryChange = (e) => {
+        setSubCategories([]);
         setValues({ ...values, [e.target.name]: e.target.value });
+        if (e.target.value === 'default') {
+            return;
+        }
+
+        getSubCategories(user.token, e.target.value).then((res) =>
+            setSubCategories(res.data)
+        );
     };
 
     return (
@@ -72,8 +89,11 @@ const ProductCreate = () => {
                             <ProductForm
                                 handleSubmit={handleSubmit}
                                 handleChange={handleChange}
+                                handleCategoryChange={handleCategoryChange}
                                 values={values}
                                 loading={loading}
+                                subCategories={subCategories}
+                                subCategory={subCategory}
                             />
                         </div>
                     </div>

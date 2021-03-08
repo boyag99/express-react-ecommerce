@@ -16,6 +16,11 @@ router.get('/category/read/:slug', authCheck, adminCheck, read);
 router.put('/category/update/:slug', authCheck, adminCheck, update);
 router.delete('/category/remove/:slug', authCheck, adminCheck, remove);
 router.get('/categories', list);
-router.get('/category/sub-categories/:_id', getSubCategories);
+router.get(
+    '/category/sub-categories/:_id',
+    authCheck,
+    adminCheck,
+    getSubCategories,
+);
 
 module.exports = router;
