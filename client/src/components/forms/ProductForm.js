@@ -7,10 +7,10 @@ const ProductForm = ({
     handleSubmit,
     handleChange,
     handleCategoryChange,
+    handleSubCategoryChange,
     values,
     loading,
-    subCategories,
-    subCategory,
+    subCategoriesOption,
 }) => {
     const {
         title,
@@ -18,6 +18,7 @@ const ProductForm = ({
         price,
         category,
         categories,
+        subCategories,
         shipping,
         quantity,
         images,
@@ -148,24 +149,26 @@ const ProductForm = ({
                         ))}
                 </select>
             </div>
-            {subCategories.length > 0 && (
+            {subCategoriesOption.length > 0 && (
                 <div className='form-group'>
-                    <label htmlFor='subCategory'>Sub Category:</label>
-                    <select
-                        id='subCategory'
-                        name='subCategory'
+                    <label htmlFor='subCategories'>Sub Categories:</label>
+                    <Select
+                        mode='multiple'
+                        allowClear
+                        style={{ width: '100%' }}
+                        placeholder='Please select sub categories'
+                        id='subCategories'
                         style={{ width: 200 }}
-                        value={subCategory}
-                        onChange={handleChange}>
-                        <option>Select a sub category</option>
-                        {subCategories.map((subCategory, index) => (
-                            <option
+                        value={subCategories}
+                        onChange={handleSubCategoryChange}>
+                        {subCategoriesOption.map((subCategory, index) => (
+                            <Option
                                 key={subCategory._id + '_' + index}
                                 value={subCategory._id}>
                                 {subCategory.name}
-                            </option>
+                            </Option>
                         ))}
-                    </select>
+                    </Select>
                 </div>
             )}
 

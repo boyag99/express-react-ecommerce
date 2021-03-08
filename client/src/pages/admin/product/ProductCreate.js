@@ -13,6 +13,7 @@ const initialState = {
     price: 0,
     category: '',
     categories: [],
+    subCategories: [],
     shipping: '',
     quantity: 0,
     images: [],
@@ -24,8 +25,7 @@ const initialState = {
 
 const ProductCreate = () => {
     const [values, setValues] = useState(initialState);
-    const [subCategories, setSubCategories] = useState([]);
-    const [subCategory, setCategory] = useState('');
+    const [subCategoriesOption, setSubCategoriesOption] = useState([]);
     const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => ({ ...state }));
 
@@ -56,23 +56,23 @@ const ProductCreate = () => {
     };
 
     const handleChange = (e) => {
-        if (e.target.name === 'subCategory') {
-            setCategory(e.target.value);
-        } else {
-            setValues({ ...values, [e.target.name]: e.target.value });
-        }
+        setValues({ ...values, [e.target.name]: e.target.value });
     };
 
     const handleCategoryChange = (e) => {
-        setSubCategories([]);
+        setSubCategoriesOption([]);
         setValues({ ...values, [e.target.name]: e.target.value });
         if (e.target.value === 'default') {
             return;
         }
 
         getSubCategories(user.token, e.target.value).then((res) =>
-            setSubCategories(res.data)
+            setSubCategoriesOption(res.data)
         );
+    };
+
+    const handleSubCategoryChange = (value) => {
+        setValues({ ...values, subCategories: value });
     };
 
     return (
@@ -90,10 +90,12 @@ const ProductCreate = () => {
                                 handleSubmit={handleSubmit}
                                 handleChange={handleChange}
                                 handleCategoryChange={handleCategoryChange}
+                                handleSubCategoryChange={
+                                    handleSubCategoryChange
+                                }
                                 values={values}
                                 loading={loading}
-                                subCategories={subCategories}
-                                subCategory={subCategory}
+                                subCategoriesOption={subCategoriesOption}
                             />
                         </div>
                     </div>
