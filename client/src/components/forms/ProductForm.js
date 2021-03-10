@@ -29,7 +29,7 @@ const ProductForm = ({
     } = values;
 
     return (
-        <form>
+        <>
             <div className='form-group'>
                 <label htmlFor='title'>Title:</label>
                 <Input
@@ -181,7 +181,7 @@ const ProductForm = ({
                     Submit
                 </Button>
             </div>
-        </form>
+        </>
     );
 };
 

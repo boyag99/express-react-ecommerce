@@ -6,6 +6,7 @@ import { createProduct } from '../../../functions/product';
 import { getCategories, getSubCategories } from '../../../functions/category';
 import ProductForm from '../../../components/forms/ProductForm';
 //import CategoryList from '../../../pages/admin/category/CategoryList';
+import FileUpload from '../../../components/forms/FileUpload';
 
 const initialState = {
     title: '',
@@ -87,17 +88,20 @@ const ProductCreate = () => {
                         <div className='col-md-6 offset-md-3'>
                             <h4>Product Create</h4>
                             <hr />
-                            <ProductForm
-                                handleSubmit={handleSubmit}
-                                handleChange={handleChange}
-                                handleCategoryChange={handleCategoryChange}
-                                handleSubCategoryChange={
-                                    handleSubCategoryChange
-                                }
-                                values={values}
-                                loading={loading}
-                                subCategoriesOption={subCategoriesOption}
-                            />
+                            <form>
+                                <FileUpload />
+                                <ProductForm
+                                    handleSubmit={handleSubmit}
+                                    handleChange={handleChange}
+                                    handleCategoryChange={handleCategoryChange}
+                                    handleSubCategoryChange={
+                                        handleSubCategoryChange
+                                    }
+                                    values={values}
+                                    loading={loading}
+                                    subCategoriesOption={subCategoriesOption}
+                                />
+                            </form>
                         </div>
                     </div>
                 </div>
