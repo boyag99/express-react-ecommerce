@@ -27,6 +27,7 @@ const SubCategoryForm = ({
             <div className='form-group'>
                 <label htmlFor='category'>Category: </label>
                 <Select
+                    defaultValue={parent && parent._id}
                     className='form-control'
                     showSearch
                     style={{ width: 200 }}
@@ -39,8 +40,7 @@ const SubCategoryForm = ({
                         option.children
                             .toLowerCase()
                             .indexOf(input.toLowerCase()) >= 0
-                    }
-                    defaultValue={parent && parent._id}>
+                    }>
                     {categories.length > 0 &&
                         categories.map((category) => (
                             <Option key={category._id} value={category._id}>
