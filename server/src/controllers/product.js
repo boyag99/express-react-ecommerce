@@ -18,11 +18,15 @@ exports.read = async (req, res) => {
     const { slug } = req.params;
 
     try {
-        const product = await Product.find({ slug })
+        const product = await Product.findOne({ slug })
             .populate('category')
-            .populate('subCategories')
-            .exec();
-        res.json(product);
+            .populate('subCategories');
+
+        if (product) {
+            res.json(product);
+        } else {
+            res.status(404).json({ message: 'Product not found' });
+        }
     } catch (error) {
         res.status(400).json(error);
     }
