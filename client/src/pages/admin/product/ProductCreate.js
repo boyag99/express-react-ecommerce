@@ -87,7 +87,6 @@ const ProductCreate = () => {
                     <div className='row'>
                         <div className='col-md-6 offset-md-3'>
                             <h4>Product Create</h4>
-                            {JSON.stringify(values.images)}
                             <hr />
                             <form>
                                 <FileUpload
