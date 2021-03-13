@@ -44,7 +44,7 @@ const productSchema = new Schema(
             type: Number,
             default: 0,
         },
-        // image: Array,
+        images: Array,
         shipping: {
             type: String,
             enum: ['Yes', 'No'],
