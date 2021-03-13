@@ -28,6 +28,7 @@ const ProductUpdate = ({ match }) => {
     const [loading, setLoading] = useState(false);
     const [categoriesOption, setCategoriesOption] = useState([]);
     const [subCategoriesOption, setSubCategoriesOption] = useState([]);
+    const [arrayOfSubCategoriesIds, setArrayOfSubCategoriesIds] = useState([]);
     const { user } = useSelector((state) => ({ ...state }));
     const { params } = match;
 
@@ -40,6 +41,16 @@ const ProductUpdate = ({ match }) => {
         getProduct(user.token, params.slug)
             .then((res) => {
                 setValues({ ...values, ...res.data });
+                getSubCategories(
+                    user.token,
+                    res.data.category._id
+                ).then((res) => setSubCategoriesOption(res.data));
+
+                let arr = [];
+                res.data.subCategories.map((subCategory) => {
+                    arr.push(subCategory._id);
+                });
+                setArrayOfSubCategoriesIds(arr);
             })
             .catch((err) => {
                 console.log(err.response.data.message);
@@ -57,13 +68,7 @@ const ProductUpdate = ({ match }) => {
     };
 
     const handleCategoryChange = (e) => {
-        setSubCategoriesOption([]);
-        values.subCategories = [];
         setValues({ ...values, category: e.target.value });
-
-        getSubCategories(user.token, e.target.value).then((res) =>
-            setSubCategoriesOption(res.data)
-        );
     };
 
     const handleSubCategoryChange = (value) => {
@@ -94,6 +99,12 @@ const ProductUpdate = ({ match }) => {
                                     loading={loading}
                                     categoriesOption={categoriesOption}
                                     subCategoriesOption={subCategoriesOption}
+                                    arrayOfSubCategoriesIds={
+                                        arrayOfSubCategoriesIds
+                                    }
+                                    setArrayOfSubCategoriesIds={
+                                        setArrayOfSubCategoriesIds
+                                    }
                                 />
                             </form>
                         </div>

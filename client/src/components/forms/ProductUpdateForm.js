@@ -12,6 +12,8 @@ const ProductUpdateForm = ({
     loading,
     categoriesOption,
     subCategoriesOption,
+    arrayOfSubCategoriesIds,
+    setArrayOfSubCategoriesIds,
 }) => {
     const {
         title,
@@ -159,8 +161,8 @@ const ProductUpdateForm = ({
                         placeholder='Please select sub categories'
                         id='subCategories'
                         style={{ width: 200 }}
-                        value={subCategories}
-                        onChange={handleSubCategoryChange}>
+                        value={arrayOfSubCategoriesIds}
+                        onChange={(value) => setArrayOfSubCategoriesIds(value)}>
                         {subCategoriesOption.map((subCategory, index) => (
                             <Option
                                 key={subCategory._id + '_' + index}
