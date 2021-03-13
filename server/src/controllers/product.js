@@ -14,7 +14,19 @@ exports.create = async (req, res) => {
     }
 };
 
-exports.read = async (req, res) => {};
+exports.read = async (req, res) => {
+    const { slug } = req.params;
+
+    try {
+        const product = await Product.find({ slug })
+            .populate('category')
+            .populate('subCategories')
+            .exec();
+        res.json(product);
+    } catch (error) {
+        res.status(400).json(error);
+    }
+};
 
 exports.update = async (req, res) => {};
 
