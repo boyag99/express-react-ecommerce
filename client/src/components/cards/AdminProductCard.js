@@ -1,24 +1,37 @@
 import React from 'react';
 import { Card } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
 
-const AdminProductCart = ({ product, key, loading }) => {
+const AdminProductCart = ({ product, loading }) => {
     const { title, description, images } = product;
     return (
         <Card
             loading={loading}
-            key={key}
             hoverable
             cover={
                 <img
                     alt='example'
-                    src={images && images.length ? images[0].url : ''}
+                    src={
+                        images && images.length
+                            ? images[0].url
+                            : '/images/default-image.png'
+                    }
                     style={{ objectFit: 'cover', height: 240 }}
                     className='p-1'
                 />
-            }>
-            <Meta title={title} description={description} />
+            }
+            actions={[
+                <EditOutlined key='edit' />,
+                <DeleteOutlined key='delete' />,
+            ]}>
+            <Meta
+                title={title}
+                description={`${
+                    description && description.substring(0, 35)
+                }...`}
+            />
         </Card>
     );
 };
