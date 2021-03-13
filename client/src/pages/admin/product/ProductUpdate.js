@@ -33,6 +33,7 @@ const ProductUpdate = ({ match }) => {
 
     useEffect(() => {
         loadProduct();
+        loadCategories();
     }, []);
 
     const loadProduct = () => {
@@ -45,15 +46,29 @@ const ProductUpdate = ({ match }) => {
             });
     };
 
+    const loadCategories = () => {
+        getCategories().then((res) => setCategoriesOption(res.data));
+    };
+
     const handleSubmit = () => {};
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value });
     };
 
-    const handleCategoryChange = () => {};
+    const handleCategoryChange = (e) => {
+        setSubCategoriesOption([]);
+        values.subCategories = [];
+        setValues({ ...values, category: e.target.value });
 
-    const handleSubCategoryChange = () => {};
+        getSubCategories(user.token, e.target.value).then((res) =>
+            setSubCategoriesOption(res.data)
+        );
+    };
+
+    const handleSubCategoryChange = (value) => {
+        setValues({ ...values, subCategories: value });
+    };
 
     return (
         <div className='container-fluid p-5'>

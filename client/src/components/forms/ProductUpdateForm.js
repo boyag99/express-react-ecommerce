@@ -135,13 +135,14 @@ const ProductUpdateForm = ({
                         name='category'
                         style={{ width: 200 }}
                         value={category}
+                        placeholder='Please select category'
                         onChange={handleCategoryChange}>
-                        <option value='default'>Select a brand</option>
-                        {categoriesOption.map((category, index) => (
+                        {categoriesOption.map((c, index) => (
                             <option
-                                key={category._id + '_' + index}
-                                value={category._id}>
-                                {category.name}
+                                key={c._id + '_' + index}
+                                value={c._id}
+                                selected={c._id === category._id}>
+                                {c.name}
                             </option>
                         ))}
                     </select>
