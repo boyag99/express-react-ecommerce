@@ -73,9 +73,8 @@ const ProductUpdateForm = ({
                     id='shipping'
                     name='shipping'
                     style={{ width: 200 }}
-                    value={shipping}
+                    value={shipping === 'Yes' ? 'Yes' : 'No'}
                     onChange={handleChange}>
-                    <option>Select a shipping</option>
                     <option key='No' value='No'>
                         No
                     </option>
@@ -104,7 +103,6 @@ const ProductUpdateForm = ({
                     style={{ width: 200 }}
                     value={color}
                     onChange={handleChange}>
-                    <option>Select a color</option>
                     {colors.length > 0 &&
                         colors.map((color, index) => (
                             <option key={color + '_' + index} value={color}>
@@ -121,7 +119,6 @@ const ProductUpdateForm = ({
                     style={{ width: 200 }}
                     value={brand}
                     onChange={handleChange}>
-                    <option>Select a brand</option>
                     {brands &&
                         brands.map((brand, index) => (
                             <option key={brand + '_' + index} value={brand}>

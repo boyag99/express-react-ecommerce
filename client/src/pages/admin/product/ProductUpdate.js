@@ -47,7 +47,9 @@ const ProductUpdate = ({ match }) => {
 
     const handleSubmit = () => {};
 
-    const handleChange = () => {};
+    const handleChange = (e) => {
+        setValues({ ...values, [e.target.name]: e.target.value });
+    };
 
     const handleCategoryChange = () => {};
 
@@ -64,6 +66,7 @@ const ProductUpdate = ({ match }) => {
                         <div className='col-md-6 offset-md-3'>
                             <h4>Product Update</h4>
                             <hr />
+                            {JSON.stringify(values)}
                             <form onSubmit={(e) => e.preventDefault()}>
                                 <ProductUpdateForm
                                     handleSubmit={handleSubmit}
