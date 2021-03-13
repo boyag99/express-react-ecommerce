@@ -48,8 +48,6 @@ export const removeProduct = async (token, slug) => {
     );
 };
 
-export const getProducts = async () => {
-    return await axios.get(
-        `${process.env.REACT_APP_API}/${PRODUCT_API_ENDPOINT}/products`
-    );
+export const getProductsByCount = async (count) => {
+    return await axios.get(`${process.env.REACT_APP_API}/products/${count}`);
 };
