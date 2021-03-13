@@ -21,8 +21,14 @@ exports.update = async (req, res) => {};
 exports.remove = async (req, res) => {};
 
 exports.list = async (req, res) => {
+    const count = parseInt(req.params.count);
     try {
-        const products = await Product.find({});
+        const products = await Product.find({})
+            .limit(count)
+            .populate('category')
+            .populate('subCategories')
+            .sort([['createdAt', 'desc']])
+            .exec();
         res.status(200).json(products);
     } catch (error) {
         res.status(400).json({ error: error.message });
