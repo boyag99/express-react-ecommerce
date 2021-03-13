@@ -18,7 +18,17 @@ exports.read = async (req, res) => {};
 
 exports.update = async (req, res) => {};
 
-exports.remove = async (req, res) => {};
+exports.remove = async (req, res) => {
+    const { slug } = req.params;
+
+    try {
+        const product = await Product.findOneAndDelete({ slug });
+
+        res.json(product);
+    } catch (error) {
+        res.status(400).json(error);
+    }
+};
 
 exports.list = async (req, res) => {
     const count = parseInt(req.params.count);
