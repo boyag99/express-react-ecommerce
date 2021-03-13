@@ -3,10 +3,13 @@ import AdminNav from '../../../components/nav/AdminNav';
 import { getProductsByCount } from '../../../functions/product';
 import { toast } from 'react-toastify';
 import AdminProductCart from '../../../components/cards/AdminProductCard';
+import { removeProduct } from '../../../functions/product';
+import { useSelector } from 'react-redux';
 
 const AllProducts = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const { user } = useSelector((state) => ({ ...state }));
 
     useEffect(() => {
         loadAllProducts();
@@ -26,6 +29,28 @@ const AllProducts = () => {
             });
     };
 
+    const handleDelete = async (slug) => {
+        setLoading(true);
+        let confirm = window.confirm(
+            'Are you sure you want to remove this category?'
+        );
+
+        if (confirm) {
+            const res = await removeProduct(user.token, slug);
+
+            if (res) {
+                loadAllProducts();
+                toast.success(
+                    `Delete product with name ${res.data.title} successfully`
+                );
+            } else {
+                toast.error(res.response.data.error.message);
+            }
+        }
+
+        setLoading(false);
+    };
+
     return (
         <div className='container-fluid p-5'>
             <div className='row'>
@@ -43,6 +68,7 @@ const AllProducts = () => {
                                     product={product}
                                     key={product._id}
                                     loading={loading}
+                                    handleDelete={handleDelete}
                                 />
                             </div>
                         ))}

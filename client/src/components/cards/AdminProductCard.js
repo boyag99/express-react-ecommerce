@@ -4,8 +4,9 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
 
-const AdminProductCart = ({ product, loading }) => {
+const AdminProductCart = ({ product, loading, handleDelete }) => {
     const { title, description, images } = product;
+
     return (
         <Card
             loading={loading}
@@ -24,7 +25,10 @@ const AdminProductCart = ({ product, loading }) => {
             }
             actions={[
                 <EditOutlined key='edit' />,
-                <DeleteOutlined key='delete' />,
+                <DeleteOutlined
+                    key='delete'
+                    onClick={() => handleDelete(product.slug)}
+                />,
             ]}>
             <Meta
                 title={title}
