@@ -3,13 +3,14 @@ import { Button, Input, InputNumber, Select } from 'antd';
 const { TextArea } = Input;
 const { Option } = Select;
 
-const ProductForm = ({
+const ProductUpdateForm = ({
     handleSubmit,
     handleChange,
     handleCategoryChange,
     handleSubCategoryChange,
     values,
     loading,
+    categoriesOption,
     subCategoriesOption,
 }) => {
     const {
@@ -17,7 +18,6 @@ const ProductForm = ({
         description,
         price,
         category,
-        categories,
         subCategories,
         shipping,
         quantity,
@@ -130,25 +130,27 @@ const ProductForm = ({
                         ))}
                 </select>
             </div>
-            <div className='form-group'>
-                <label htmlFor='category'>Category:</label>
-                <select
-                    id='category'
-                    name='category'
-                    style={{ width: 200 }}
-                    value={category}
-                    onChange={handleCategoryChange}>
-                    <option value='default'>Select a brand</option>
-                    {categories.length > 0 &&
-                        categories.map((category, index) => (
+            {categoriesOption.length > 0 && (
+                <div className='form-group'>
+                    <label htmlFor='category'>Category:</label>
+                    <select
+                        id='category'
+                        name='category'
+                        style={{ width: 200 }}
+                        value={category}
+                        onChange={handleCategoryChange}>
+                        <option value='default'>Select a brand</option>
+                        {categoriesOption.map((category, index) => (
                             <option
                                 key={category._id + '_' + index}
                                 value={category._id}>
                                 {category.name}
                             </option>
                         ))}
-                </select>
-            </div>
+                    </select>
+                </div>
+            )}
+
             {subCategoriesOption.length > 0 && (
                 <div className='form-group'>
                     <label htmlFor='subCategories'>Sub Categories:</label>
@@ -185,4 +187,4 @@ const ProductForm = ({
     );
 };
 
-export default ProductForm;
+export default ProductUpdateForm;

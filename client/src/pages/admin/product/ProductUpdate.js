@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { getProduct } from '../../../functions/product';
 import { getCategories, getSubCategories } from '../../../functions/category';
-import ProductForm from '../../../components/forms/ProductForm';
+import ProductUpdateForm from '../../../components/forms/ProductUpdateForm';
 //import CategoryList from '../../../pages/admin/category/CategoryList';
 import FileUpload from '../../../components/forms/FileUpload';
 
@@ -13,7 +13,6 @@ const initialState = {
     description: '',
     price: 0,
     category: '',
-    categories: [],
     subCategories: [],
     shipping: '',
     quantity: 0,
@@ -26,6 +25,9 @@ const initialState = {
 
 const ProductUpdate = ({ match }) => {
     const [values, setValues] = useState(initialState);
+    const [loading, setLoading] = useState(false);
+    const [categoriesOption, setCategoriesOption] = useState([]);
+    const [subCategoriesOption, setSubCategoriesOption] = useState([]);
     const { user } = useSelector((state) => ({ ...state }));
     const { params } = match;
 
@@ -43,6 +45,14 @@ const ProductUpdate = ({ match }) => {
             });
     };
 
+    const handleSubmit = () => {};
+
+    const handleChange = () => {};
+
+    const handleCategoryChange = () => {};
+
+    const handleSubCategoryChange = () => {};
+
     return (
         <div className='container-fluid p-5'>
             <div className='row'>
@@ -54,7 +64,20 @@ const ProductUpdate = ({ match }) => {
                         <div className='col-md-6 offset-md-3'>
                             <h4>Product Update</h4>
                             <hr />
-                            <form></form>
+                            <form onSubmit={(e) => e.preventDefault()}>
+                                <ProductUpdateForm
+                                    handleSubmit={handleSubmit}
+                                    handleChange={handleChange}
+                                    handleCategoryChange={handleCategoryChange}
+                                    handleSubCategoryChange={
+                                        handleSubCategoryChange
+                                    }
+                                    values={values}
+                                    loading={loading}
+                                    categoriesOption={categoriesOption}
+                                    subCategoriesOption={subCategoriesOption}
+                                />
+                            </form>
                         </div>
                     </div>
                 </div>

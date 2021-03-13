@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createProduct } from '../../../functions/product';
 import { getCategories, getSubCategories } from '../../../functions/category';
-import ProductForm from '../../../components/forms/ProductForm';
+import ProductCreateForm from '../../../components/forms/ProductCreateForm';
 //import CategoryList from '../../../pages/admin/category/CategoryList';
 import FileUpload from '../../../components/forms/FileUpload';
 
@@ -93,7 +93,7 @@ const ProductCreate = () => {
                                     values={values}
                                     setValues={setValues}
                                 />
-                                <ProductForm
+                                <ProductCreateForm
                                     handleSubmit={handleSubmit}
                                     handleChange={handleChange}
                                     handleCategoryChange={handleCategoryChange}
