@@ -22,6 +22,7 @@ import CategoryUpdate from './pages/admin/category/CategoryUpdate';
 import SubCategoryCreate from './pages/admin/sub_category/SubCategoryCreate';
 import SubCategoryUpdate from './pages/admin/sub_category/SubCategoryUpdate';
 import ProductCreate from './pages/admin/product/ProductCreate';
+import AllProducts from './pages/admin/product/AllProducts';
 
 import { auth } from './firebase';
 import { currentUser } from './functions/auth';
@@ -103,6 +104,11 @@ const App = () => {
                     exact
                     path='/admin/product'
                     component={ProductCreate}
+                />
+                <AdminRoute
+                    exact
+                    path='/admin/products'
+                    component={AllProducts}
                 />
             </Switch>
 
