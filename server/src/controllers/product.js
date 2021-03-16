@@ -32,7 +32,19 @@ exports.read = async (req, res) => {
     }
 };
 
-exports.update = async (req, res) => {};
+exports.update = async (req, res) => {
+    const { slug } = req.params;
+    req.body.slug = slugify(req.body.title);
+    try {
+        const product = await Product.findOneAndUpdate({ slug }, req.body, {
+            new: true,
+        }).exec();
+
+        res.json(product);
+    } catch (error) {
+        res.status(400).json(error);
+    }
+};
 
 exports.remove = async (req, res) => {
     const { slug } = req.params;
