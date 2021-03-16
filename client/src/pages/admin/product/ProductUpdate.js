@@ -29,6 +29,7 @@ const ProductUpdate = ({ match }) => {
     const [categoriesOption, setCategoriesOption] = useState([]);
     const [subCategoriesOption, setSubCategoriesOption] = useState([]);
     const [arrayOfSubCategoriesIds, setArrayOfSubCategoriesIds] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
     const { user } = useSelector((state) => ({ ...state }));
     const { params } = match;
 
@@ -68,7 +69,22 @@ const ProductUpdate = ({ match }) => {
     };
 
     const handleCategoryChange = (e) => {
-        setValues({ ...values, category: e.target.value });
+        setValues({
+            ...values,
+            subCategories: [],
+        });
+
+        setSelectedCategory(e.target.value);
+
+        getSubCategories(user.token, e.target.value).then((res) =>
+            setSubCategoriesOption(res.data)
+        );
+
+        if (values.category._id === e.target.value) {
+            loadProduct();
+        }
+
+        setArrayOfSubCategoriesIds([]);
     };
 
     const handleSubCategoryChange = (value) => {
@@ -105,6 +121,7 @@ const ProductUpdate = ({ match }) => {
                                     setArrayOfSubCategoriesIds={
                                         setArrayOfSubCategoriesIds
                                     }
+                                    selectedCategory={selectedCategory}
                                 />
                             </form>
                         </div>

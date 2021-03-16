@@ -14,6 +14,7 @@ const ProductUpdateForm = ({
     subCategoriesOption,
     arrayOfSubCategoriesIds,
     setArrayOfSubCategoriesIds,
+    selectedCategory,
 }) => {
     const {
         title,
@@ -136,7 +137,9 @@ const ProductUpdateForm = ({
                         id='category'
                         name='category'
                         style={{ width: 200 }}
-                        value={category}
+                        value={
+                            selectedCategory ? selectedCategory : category._id
+                        }
                         placeholder='Please select category'
                         onChange={handleCategoryChange}>
                         {categoriesOption.map((c, index) => (
