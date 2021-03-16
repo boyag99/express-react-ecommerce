@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { getProduct } from '../../../functions/product';
+import { getProduct, updateProduct } from '../../../functions/product';
 import { getCategories, getSubCategories } from '../../../functions/category';
 import ProductUpdateForm from '../../../components/forms/ProductUpdateForm';
 //import CategoryList from '../../../pages/admin/category/CategoryList';
@@ -23,7 +23,7 @@ const initialState = {
     brand: '',
 };
 
-const ProductUpdate = ({ match }) => {
+const ProductUpdate = ({ history, match }) => {
     const [values, setValues] = useState(initialState);
     const [loading, setLoading] = useState(false);
     const [categoriesOption, setCategoriesOption] = useState([]);
@@ -62,7 +62,26 @@ const ProductUpdate = ({ match }) => {
         getCategories().then((res) => setCategoriesOption(res.data));
     };
 
-    const handleSubmit = () => {};
+    const handleSubmit = () => {
+        setLoading(true);
+
+        values.subCategories = arrayOfSubCategoriesIds;
+        values.category = selectedCategory ? selectedCategory : values.category;
+
+        updateProduct(user.token, values.slug, values)
+            .then((res) => {
+                toast.success(
+                    `Updated product with name ${values.title} successfully`
+                );
+                history.push('/admin/products');
+            })
+            .catch((err) => {
+                toast.error(err.response.data.error);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value });
