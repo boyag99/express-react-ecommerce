@@ -48,9 +48,9 @@ const ProductUpdate = ({ history, match }) => {
                 ).then((res) => setSubCategoriesOption(res.data));
 
                 let arr = [];
-                res.data.subCategories.map((subCategory) => {
-                    arr.push(subCategory._id);
-                });
+                res.data.subCategories.map((subCategory) =>
+                    arr.push(subCategory._id)
+                );
                 setArrayOfSubCategoriesIds(arr);
             })
             .catch((err) => {
@@ -106,10 +106,6 @@ const ProductUpdate = ({ history, match }) => {
         setArrayOfSubCategoriesIds([]);
     };
 
-    const handleSubCategoryChange = (value) => {
-        setValues({ ...values, subCategories: value });
-    };
-
     return (
         <div className='container-fluid p-5'>
             <div className='row'>
@@ -129,9 +125,6 @@ const ProductUpdate = ({ history, match }) => {
                                     handleSubmit={handleSubmit}
                                     handleChange={handleChange}
                                     handleCategoryChange={handleCategoryChange}
-                                    handleSubCategoryChange={
-                                        handleSubCategoryChange
-                                    }
                                     values={values}
                                     loading={loading}
                                     categoriesOption={categoriesOption}

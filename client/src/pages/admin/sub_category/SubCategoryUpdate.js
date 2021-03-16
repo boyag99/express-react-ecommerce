@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import SubCategoryForm from '../../../components/forms/SubCategoryForm';
 import {
     updateSubCategory,
-    getSubCategories,
     getSubCategory,
 } from '../../../functions/sub_categories';
 
@@ -15,18 +14,12 @@ const SubCategoryUpdate = ({ history, match }) => {
     const [category, setCategory] = useState(null);
     const [loading, setLoading] = useState(false);
     const [parent, setParent] = useState('');
-    const [subCategories, setSubCategories] = useState([]);
     const { user } = useSelector((state) => ({ ...state }));
     const { params } = match;
 
     useEffect(() => {
-        loadSubCategories();
         loadSubCategory();
     }, []);
-
-    const loadSubCategories = () => {
-        getSubCategories().then((res) => setSubCategories(res.data));
-    };
 
     const loadSubCategory = () => {
         getSubCategory(user.token, params.slug).then((res) => {

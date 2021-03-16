@@ -27,7 +27,7 @@ const SubCategoryForm = ({
             <div className='form-group'>
                 <label htmlFor='category'>Category: </label>
                 <Select
-                    defaultValue={parent && parent._id}
+                    defaultValue={parent._id}
                     className='form-control'
                     showSearch
                     style={{ width: 200 }}

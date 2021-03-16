@@ -94,7 +94,6 @@ const SubCategoryCreate = () => {
                                 loading={loading}
                                 subCategories={subCategories}
                                 handleRemove={handleRemove}
-                                token={user.token}
                             />
                         </div>
                     </div>

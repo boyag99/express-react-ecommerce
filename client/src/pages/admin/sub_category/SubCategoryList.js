@@ -7,9 +7,8 @@ import {
 } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { Link } from 'react-router-dom';
-import { getCategory } from '../../../functions/category';
 
-const SubCategoryList = ({ loading, subCategories, handleRemove, token }) => {
+const SubCategoryList = ({ loading, subCategories, handleRemove }) => {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
 

@@ -3,7 +3,7 @@ import Resizer from 'react-image-file-resizer';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Avatar, Badge, Spin } from 'antd';
-import { DeleteOutlined, LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 
 const FileUpload = ({ values, setValues }) => {

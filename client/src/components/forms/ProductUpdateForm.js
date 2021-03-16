@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Input, InputNumber, Select } from 'antd';
+import { Button, Input, Select } from 'antd';
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -7,7 +7,6 @@ const ProductUpdateForm = ({
     handleSubmit,
     handleChange,
     handleCategoryChange,
-    handleSubCategoryChange,
     values,
     loading,
     categoriesOption,
@@ -21,10 +20,8 @@ const ProductUpdateForm = ({
         description,
         price,
         category,
-        subCategories,
         shipping,
         quantity,
-        images,
         colors,
         brands,
         color,
@@ -163,7 +160,6 @@ const ProductUpdateForm = ({
                         style={{ width: '100%' }}
                         placeholder='Please select sub categories'
                         id='subCategories'
-                        style={{ width: 200 }}
                         value={arrayOfSubCategoriesIds}
                         onChange={(value) => setArrayOfSubCategoriesIds(value)}>
                         {subCategoriesOption.map((subCategory, index) => (
