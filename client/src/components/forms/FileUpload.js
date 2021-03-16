@@ -36,6 +36,8 @@ const FileUpload = ({ values, setValues }) => {
                                     ...values,
                                     images: allUploadedFiles,
                                 });
+
+                                console.log(allUploadedFiles);
                                 setLoading(false);
                             })
                             .catch((err) => {
@@ -59,12 +61,16 @@ const FileUpload = ({ values, setValues }) => {
             )
             .then((res) => {
                 const { images } = values;
-
+                console.log(images);
                 let filteredImage = images.filter((image) => {
+                    console.log(image.public_id !== public_id);
                     return image.public_id !== public_id;
                 });
 
+                console.log('filteredImage', filteredImage);
+
                 setValues({ ...values, images: filteredImage });
+                console.log(values);
                 setLoading(false);
                 toast.success(`Delete image with id ${public_id} successfully`);
             })

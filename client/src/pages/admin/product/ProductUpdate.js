@@ -102,6 +102,8 @@ const ProductUpdate = ({ match }) => {
                         <div className='col-md-6 offset-md-3'>
                             <h4>Product Update</h4>
                             <hr />
+                            <FileUpload values={values} setValues={setValues} />
+                            <hr />
                             {JSON.stringify(values)}
                             <form onSubmit={(e) => e.preventDefault()}>
                                 <ProductUpdateForm

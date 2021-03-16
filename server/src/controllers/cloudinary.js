@@ -24,7 +24,6 @@ exports.upload = async (req, res) => {
 exports.remove = async (req, res) => {
     try {
         let result = await v2.uploader.destroy(req.body.public_id);
-
         res.json(result);
     } catch (error) {
         res.status(400).json({ success: false, error });
